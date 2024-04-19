@@ -16,7 +16,7 @@ This repository contains the software used for this project. Software can be div
 
 ## Arduino Code
 There are three Arduino codes:
-```fast_sensor_array``` is a high sampling frequency, low precision data collection algorithm. It is not used in this application because precision is preferred over speed. The code was written using fast digital pin-driving code from Pololu Corporation. The algorithm uses low-level coding to achieve a sampling frequency of 1k Hz. The data from analog the biggest gain in speed comes from accessing the ADC registers directly. The code outputs values from 0 to 255.
+**fast_sensor_array** is a high sampling frequency, low precision data collection algorithm. It is not used in this application because precision is preferred over speed. The code was written using fast digital pin-driving code from Pololu Corporation. The algorithm uses low-level coding to achieve a sampling frequency of 1k Hz. The data from analog the biggest gain in speed comes from accessing the ADC registers directly. The code outputs values from 0 to 255.
 ```
   ADCSRA = 0;             // clear ADCSRA register
   ADCSRB = 0;             // clear ADCSRB register
@@ -30,13 +30,40 @@ There are three Arduino codes:
   ADCH                    // contains the value from the ADC chip
 ```
 
-```slow_sensor_read_v3``` This high-precision, low-speed code outputs values between 0 and 1023, the sampling frequency is 10 Hz. It uses standard Arduino functions. The inner sampling loop iterates through columns (MUXs), the outer loop energizes the rows (1 to 24 3 8-bit shift registers). This algorithm is used in the sensor
+**slow_sensor_read_v3** This high-precision, low-speed code outputs values between 0 and 1023, the sampling frequency is 10 Hz. It uses standard Arduino functions. The inner sampling loop iterates through columns (MUXs), the outer loop energizes the rows (1 to 24 3 8-bit shift registers). This algorithm is used in the sensor.
 
 
-```timing_v4``` This high-precision, low-speed code outputs values between 0 and 1023, the sampling frequency is above 10 Hz. It uses standard Arduino functions. The inner sampling loop energizes the rows (1 to 24 3 8-bit shift registers), the outer loop iterates through columns (MUXs). Because MUXs need time to set this method archives higher sampling frequency as their selection address is changed only 4 times per full sample, whereas, '''slow_sensor_read_v3''' changes it 96 times.
+**timing_v4** This high-precision, low-speed code outputs values between 0 and 1023, the sampling frequency is above 10 Hz. It uses standard Arduino functions. The inner sampling loop energizes the rows (1 to 24 3 8-bit shift registers), the outer loop iterates through columns (MUXs). Because MUXs need time to set this method archives higher sampling frequency as their selection address is changed only 4 times per full sample, whereas, '''slow_sensor_read_v3''' changes it 96 times.
 
 
 ## Image Processing
+Once the dataset has been collected, it is processed the following codes are used for image processing its evaluation and visualisation. 
+
+**data_manipulation.py** Consists of a few main functions that process the collected dataset.
+```createExtendedDataset``` augments the datapoints to extend the dataset 8-fold
+```createExtendedDataset``` splits the dataset into training and testing sets
+```train_test_split_subset``` splits the dataset into training and testing sets to specific lengths
+
+**data_visualisation.py** Visualises the dataset and different image processing effects.
+
+**rmBadPics.py** The dataset is saved in 2 formats, as images and in JSON files (dictionaries). Thus to delete a bad datapoint this script deletes it from both formats.
+
+**compare_normalization.py** Trains googlenet models using different dataset normalization parameters and saves the results in json file.
+
+**compare_transormation_on_googlenet.py** Trains googlenet models using different image processing techniques and saves the results in json file.
+
+**display_DL_results.py** Loads the information from JSON files and displays it.
+
+**trainLibTorch.py** custom package library
+
+
+## Deep Learning
+Having collected data from the full grid search performed in Google Colab using Weights and Biases, the models can be trained. Some models were also trained locally to speed up the grid search. 
+
+**googlenet_test.py**, **mobilenet_v3_large.py**, and **restneet_train_test.py** train specific models and save them in .pth files.
+
+
+
 
 There are also Jupiter notebooks present as much of the tests on the model training, testing and results visualisation were carried out in Google Colab.
 
