@@ -69,7 +69,19 @@ Having collected data from the full grid search performed in Google Colab using 
 * **visualise_model.py** Visualises the model in the form of confusion matrices for training and testing datasets and displays some of the predictions and corresponding images.
 
 ## Graphical User Interface
-It runs a graphical user interface with a Deep Learning model. At the first stages of the project, the GUI was used to collect data. The button **save photo** stores the current data and displays it in a separate window for review. The user can then save or discard the data in an appropriate folder. However its primary task is to display the current output from Arduino and the prediction label which is provided by the model running in the background. There are 3 modes of predictions.
+It runs a graphical user interface with a Deep Learning model. At the first stages of the project, the GUI was used to collect data. The button **save photo** stores the current data and displays it in a separate window for review. The user can then save or discard the data in an appropriate folder. However its primary task is to display the current output from Arduino and the prediction label which is provided by the model running in the background. There are 3 modes of prediction.
+
+* **sensor_gui2.py** The GUI runs the "simple prediction", where prediction is computed on the latest data available once every GUI refresh. It is targeted at Raspberry Pi and applications that require a higher refresh.
+
+* **pytorch_snesor_V2.py** The GUI has two modes of operation
+1) Hard cumulative prediction - A class is predicted every time new data is available. Before a display refresh, the most common prediction is selected and displayed. Selected on by setting ```self.MODE_avergae_prediction = True```
+
+2) Soft cumulative prediction - The probability of every class is computed every time new data is available. Before a display refresh prediction vectors are summed up, the class corresponding to the highest summed prediction value is selected and displayed. Selected on by setting ```self.MODE_avergae_prediction = False```
+
+* **trainLibTorch.py** Custom package library.
+* **mobilenet_v3_large_test_10_classes.pth** and **mobilenet_v3_large_test_10_classes.pth** are saved wights of the trained model
+
+The README file contains instructions on how to run the software on a laptop.
 
 
 
