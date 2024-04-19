@@ -52,7 +52,7 @@ Once the dataset has been collected, it is processed the following codes are use
 
 * **rmBadPics.py** The dataset is saved in 2 formats, as images and in JSON files (dictionaries). Thus to delete a bad datapoint this script deletes it from both formats.
 
-* **compare_normalization.py** Trains googlenet models using different dataset normalization parameters and saves the results in json file.
+* **compare_normalization.py** Trains google net models using different dataset normalization parameters and saves the results in JSON file.
 
 * **compare_transormation_on_googlenet.py** Trains googlenet models using different image processing techniques and saves the results in json file.
 
@@ -71,13 +71,25 @@ Having collected data from the full grid search performed in Google Colab using 
 ## Graphical User Interface
 It runs a graphical user interface with a Deep Learning model. At the first stages of the project, the GUI was used to collect data. The button **save photo** stores the current data and displays it in a separate window for review. The user can then save or discard the data in an appropriate folder. However its primary task is to display the current output from Arduino and the prediction label which is provided by the model running in the background. There are 3 modes of prediction.
 
-* **sensor_gui2.py** The GUI runs the "simple prediction", where prediction is computed on the latest data available once every GUI refresh. It is targeted at Raspberry Pi and applications that require a higher refresh.
+* **sensor_gui2.py** The GUI runs the "simple prediction", where prediction is computed on the latest data available once every GUI refresh. It is targeted at Raspberry Pi and applications that require a higher refresh. The Raspberry Pi used for this project has a preloaded, trained full mobilenet_v3_large model to allow for offline operation. However, if ```self.online``` is set to ```True``` the models are downloaded online, two options are available: mobilenet_v3_large and googlenet. Users can also pick between 6 class and 10 class models. ```self.model_path``` specifies the path for the model in the online mode.
+```self.online = True
+      self.model_path = "mobilenet_v3_large_test_6_classes.pth"
+      self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
+      # self.class_names = ['big_fizzy', 'can', 'h_big_bottle','h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy']
+```
 
 * **pytorch_snesor_V2.py** The GUI has two modes of operation
 1) Hard cumulative prediction - A class is predicted every time new data is available. Before a display refresh, the most common prediction is selected and displayed. Selected on by setting ```self.MODE_avergae_prediction = True```
 
 2) Soft cumulative prediction - The probability of every class is computed every time new data is available. Before a display refresh prediction vectors are summed up, the class corresponding to the highest summed prediction value is selected and displayed. Selected on by setting ```self.MODE_avergae_prediction = False```
 
+
+The users have also an option between 6 and 10 class model but since the two modes are not intended for Raspberry Pi only the online mode is available. ```self.model_path``` specifies the path for the model
+```
+      self.model_path = "mobilenet_v3_large_test_6_classes.pth"
+      self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
+      # self.class_names = ['big_fizzy', 'can', 'h_big_bottle','h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy']
+```
 * **trainLibTorch.py** Custom package library.
 * **mobilenet_v3_large_test_10_classes.pth** and **mobilenet_v3_large_test_10_classes.pth** are saved wights of the trained model
 
