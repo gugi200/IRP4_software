@@ -86,6 +86,7 @@ class SensorMgr():
 
         # prediction variables
         self.newDataFlag = False
+        # if True - hard cumulative prediction; False - soft cumulative prediction
         self.MODE_avergae_prediction = True
         self.resetPredMem = True
         self.predThreadLock = False
