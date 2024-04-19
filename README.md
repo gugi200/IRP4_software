@@ -57,6 +57,8 @@ Once the dataset has been collected, it is processed the following codes are use
 * **compare_transormation_on_googlenet.py** Trains googlenet models using different image processing techniques and saves the results in json file.
 
 * **display_DL_results.py** Loads the information from JSON files and displays it.
+  
+* **save_model_offline** From a saves a full model from a model's state dictionary.
 
 * **trainLibTorch.py** Custom package library.
 
@@ -92,7 +94,7 @@ The users have also an option between 6 and 10 class model but since the two mod
 ```
 * **trainLibTorch.py** Custom package library.
 * **mobilenet_v3_large_test_10_classes.pth** and **mobilenet_v3_large_test_10_classes.pth** are saved wights of the trained model
-
+* **mobilenet_6_classes.pth** and **mobilenet_10_classes.pth** are the full model paths for the offline mode.
 The README file contains instructions on how to run the software on a laptop.
 
 
