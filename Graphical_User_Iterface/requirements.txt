@@ -1,0 +1,8 @@
+numpy
+tk
+pyserial
+pillow
+matplotlib
+json
+sys
+opencv-python

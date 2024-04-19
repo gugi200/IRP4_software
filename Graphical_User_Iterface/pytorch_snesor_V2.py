@@ -4,7 +4,6 @@ from threading import Thread
 import logging
 from tkinter import (RIGHT, Label, Scrollbar, Frame, Tk, ttk, NORMAL, DISABLED,
 Canvas, BOTH,VERTICAL, LEFT, Y, Button, Menu, Scale, messagebox, Toplevel, StringVar, IntVar, NW, TOP)
-from cv2 import VideoCapture, imwrite
 from PIL import Image, ImageTk 
 import matplotlib.pyplot as plt
 import matplotlib
@@ -14,8 +13,6 @@ from matplotlib import animation
 from matplotlib.figure import Figure
 import json
 import os
-import pathlib
-from pathlib import Path
 import sys
 import time
 import cv2
