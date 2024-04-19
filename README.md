@@ -69,7 +69,7 @@ Having collected data from the full grid search performed in Google Colab using 
 * **visualise_model.py** Visualises the model in the form of confusion matrices for training and testing datasets and displays some of the predictions and corresponding images.
 
 ## Graphical User Interface
-It runs a graphical user interface with a Deep Learning model. At the first stages of the project, the GUI was used to collect data. The button **save photo** stores the current data and displays it in a separate window for review. The user can then save or discard the data in an appropriate folder. However its primary task is to display the current output from Arduino and the prediction label which is provided by the model running in the background. There are 3 modes of predictions
+It runs a graphical user interface with a Deep Learning model. At the first stages of the project, the GUI was used to collect data. The button **save photo** stores the current data and displays it in a separate window for review. The user can then save or discard the data in an appropriate folder. However its primary task is to display the current output from Arduino and the prediction label which is provided by the model running in the background. There are 3 modes of predictions.
 
 
 
