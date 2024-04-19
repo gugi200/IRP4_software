@@ -16,8 +16,8 @@ This repository contains the software used for this project. Software can be div
 
 ## Arduino Code
 There are three Arduino codes:
-'''fast_sensor_array''' is a high sampling frequency, low precision data collection algorithm. It is not used in this application because precision is preferred over speed. The code was written using fast digital pin-driving code from Pololu Corporation. The algorithm uses low-level coding to achieve a sampling frequency of 1k Hz. The data from analog the biggest gain in speed comes from accessing the ADC registers directly. The code outputs values from 0 to 255.
-'''
+```fast_sensor_array``` is a high sampling frequency, low precision data collection algorithm. It is not used in this application because precision is preferred over speed. The code was written using fast digital pin-driving code from Pololu Corporation. The algorithm uses low-level coding to achieve a sampling frequency of 1k Hz. The data from analog the biggest gain in speed comes from accessing the ADC registers directly. The code outputs values from 0 to 255.
+```
   ADCSRA = 0;             // clear ADCSRA register
   ADCSRB = 0;             // clear ADCSRB register
   ADMUX |= (0 & 0x07);    // set A0 analog input pin
@@ -28,12 +28,12 @@ There are three Arduino codes:
   ADCSRA |= (1 << ADEN);  // enable ADC
   ADCSRA |= (1 << ADSC);  // start ADC measurements
   ADCH                    // contains the value from the ADC chip
-'''
+```
 
-'''slow_sensor_read_v3''' This high-precision, low-speed code outputs values between 0 and 1023, the sampling frequency is 10 Hz. It uses standard Arduino functions. The inner sampling loop iterates through columns (MUXs), the outer loop energizes the rows (1 to 24 3 8-bit shift registers). This algorithm is used in the sensor
+```slow_sensor_read_v3``` This high-precision, low-speed code outputs values between 0 and 1023, the sampling frequency is 10 Hz. It uses standard Arduino functions. The inner sampling loop iterates through columns (MUXs), the outer loop energizes the rows (1 to 24 3 8-bit shift registers). This algorithm is used in the sensor
 
 
-'''timing_v4''' This high-precision, low-speed code outputs values between 0 and 1023, the sampling frequency is above 10 Hz. It uses standard Arduino functions. The inner sampling loop energizes the rows (1 to 24 3 8-bit shift registers), the outer loop iterates through columns (MUXs). Because MUXs need time to set this method archives higher sampling frequency as their selection address is changed only 4 times per full sample, whereas, '''slow_sensor_read_v3''' changes it 96 times.
+```timing_v4``` This high-precision, low-speed code outputs values between 0 and 1023, the sampling frequency is above 10 Hz. It uses standard Arduino functions. The inner sampling loop energizes the rows (1 to 24 3 8-bit shift registers), the outer loop iterates through columns (MUXs). Because MUXs need time to set this method archives higher sampling frequency as their selection address is changed only 4 times per full sample, whereas, '''slow_sensor_read_v3''' changes it 96 times.
 
 
 ## Image Processing
