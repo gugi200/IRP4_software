@@ -105,7 +105,7 @@ The README file contains instructions on how to run the software on a laptop.
 
 ##
 
-There are also Jupiter notebooks present as much of the tests on the model training, testing and results visualisation were carried out in Google Colab.
+There are also Jupiter notebooks present as lots of the tests on the model training, testing and results visualisation were carried out in Google Colab.
 
 
 
