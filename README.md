@@ -84,7 +84,7 @@ It runs a graphical user interface with a Deep Learning model. At the first stag
 The README file contains instructions on how to run the software on a laptop.
 
 
-
+##
 
 There are also Jupiter notebooks present as much of the tests on the model training, testing and results visualisation were carried out in Google Colab.
 
