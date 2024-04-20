@@ -13,4 +13,4 @@ Download the prerequisits:
 ```pip install -r requirements.txt```
 
 run the GUI
-```python sensor_gui2.py``` or ```python pytorch_snesor_V2.py``
+```python sensor_gui2.py``` or ```python pytorch_snesor_V2.py```
