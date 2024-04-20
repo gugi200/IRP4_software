@@ -3,6 +3,7 @@ To run sensor_gui2.py and pytorch_snesor_V2.py download the prerequisits.
 Open command window.
 
 Set the current working directory to: Graphical_User_Iterface
+e.g. ```cd Desktop\IRP4_software\Graphical_User_Iterface```
 
 (OPTIONAL) Create virctual environment on windows:
 1) download python library
