@@ -7,8 +7,7 @@ To run sensor_gui2.py and pytorch_snesor_V2.py download the prerequisits.
    ```python -m venv myenv```
 3) activate the environment
    ```myenv\Scripts\activate```
-   to diactivate:
-   ```deactivate```
+   , (to diactivate: ```deactivate```)
 
 Download the prerequisits:
 ```pip install -r requirements.txt```
