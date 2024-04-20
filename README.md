@@ -122,7 +122,9 @@ except (NameError, UnidentifiedImageError):
     pass
 ```
 The code is embedded in the dataset augmentation function in data_manipulation.py
+
 https://github.com/gugi200/IRP4_software/blob/b59b9674c0b62a573c39ecc40aa5caf7abdeab90/Image_Processing/data_manipulation.py#L47C5-L47C26
+
 ##
 
 There are also Jupiter notebooks present as lots of the tests on the model training, testing and results visualisation were carried out in Google Colab.
