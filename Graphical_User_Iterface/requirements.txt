@@ -3,6 +3,6 @@ tk
 pyserial
 pillow
 matplotlib
-json
-sys
 opencv-python
+torch 
+torchvision
