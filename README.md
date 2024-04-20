@@ -84,19 +84,22 @@ It runs a graphical user interface with a Deep Learning model. At the first stag
       self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
       # self.class_names = ['big_fizzy', 'can', 'h_big_bottle','h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy']
 ```
+https://github.com/gugi200/IRP4_software/blob/576afbdc9cd51b92edcc34c828059d76ebc31f17/Graphical_User_Iterface/sensor_gui2.py#L80
 
 * **pytorch_snesor_V2.py** The GUI has two modes of operation
-1) Hard cumulative prediction - A class is predicted every time new data is available. Before a display refresh, the most common prediction is selected and displayed. Selected on by setting ```self.MODE_avergae_prediction = True```
+1) Hard cumulative prediction - A class is predicted every time new data is available. Before a display refresh, the most common prediction is selected and displayed. Selected on by setting ```self.MODE_avergae_prediction = True``` (https://github.com/gugi200/IRP4_software/blob/576afbdc9cd51b92edcc34c828059d76ebc31f17/Graphical_User_Iterface/pytorch_snesor_V2.py#L90)
 
-2) Soft cumulative prediction - The probability of every class is computed every time new data is available. Before a display refresh prediction vectors are summed up, the class corresponding to the highest summed prediction value is selected and displayed. Selected on by setting ```self.MODE_avergae_prediction = False```
+2) Soft cumulative prediction - The probability of every class is computed every time new data is available. Before a display refresh prediction vectors are summed up, the class corresponding to the highest summed prediction value is selected and displayed. Selected on by setting ```self.MODE_avergae_prediction = False``` (https://github.com/gugi200/IRP4_software/blob/576afbdc9cd51b92edcc34c828059d76ebc31f17/Graphical_User_Iterface/pytorch_snesor_V2.py#L90)
 
 
-The users have also an option between 6 and 10 class model but since the two modes are not intended for Raspberry Pi only the online mode is available. ```self.model_path``` specifies the path for the model
+
+The users also have an option between 6 and 10 class models, but since the two modes are not intended for Raspberry Pi, only the online mode is available. ```self.model_path``` specifies the path for the model
 ```
       self.model_path = "mobilenet_v3_large_test_6_classes.pth"
       self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
       # self.class_names = ['big_fizzy', 'can', 'h_big_bottle','h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy']
 ```
+(https://github.com/gugi200/IRP4_software/blob/576afbdc9cd51b92edcc34c828059d76ebc31f17/Graphical_User_Iterface/pytorch_snesor_V2.py#L79)
 * **trainLibTorch.py** Custom package library.
 * **mobilenet_v3_large_test_10_classes.pth** and **mobilenet_v3_large_test_10_classes.pth** are saved wights of the trained model
 * **mobilenet_6_classes.pth** and **mobilenet_10_classes.pth** are the full model paths for the offline mode.
