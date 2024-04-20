@@ -223,8 +223,9 @@ class SensorMgr():
             self.ResConf.columnconfigure(4, weight=1)
             self.ResConf.columnconfigure(5, weight=1)
             self.ResConf.columnconfigure(6, weight=1)
-            self.ResConf.columnconfigure(7, weight=1)
-            self.ResConf.columnconfigure(8, weight=1)
+            if len(self.class_names)==8:
+                self.ResConf.columnconfigure(7, weight=1)
+                self.ResConf.columnconfigure(8, weight=1)
 
             buttonSave = Button(self.ResConf, text='Save', command= lambda : self.savePhoto(pressureData))
 
@@ -234,8 +235,9 @@ class SensorMgr():
             buttonSave_class4 = Button(self.ResConf, text=f'Save {self.class_names[3]}', command= lambda : self.savePhoto(pressureData, 4))
             buttonSave_class5 = Button(self.ResConf, text=f'Save {self.class_names[4]}', command= lambda : self.savePhoto(pressureData, 5))
             buttonSave_class6 = Button(self.ResConf, text=f'Save {self.class_names[5]}', command= lambda : self.savePhoto(pressureData, 6))
-            buttonSave_class7 = Button(self.ResConf, text=f'Save {self.class_names[6]}', command= lambda : self.savePhoto(pressureData, 7))
-            buttonSave_class8 = Button(self.ResConf, text=f'Save {self.class_names[7]}', command= lambda : self.savePhoto(pressureData, 8))
+            if len(self.class_names)==8:
+                buttonSave_class7 = Button(self.ResConf, text=f'Save {self.class_names[6]}', command= lambda : self.savePhoto(pressureData, 7))
+                buttonSave_class8 = Button(self.ResConf, text=f'Save {self.class_names[7]}', command= lambda : self.savePhoto(pressureData, 8))
 
             buttonDiscard = Button(self.ResConf, text='Discard', command=self.ResConf.destroy)
             buttonSave_class1.grid(row=0, column=0)
@@ -244,8 +246,9 @@ class SensorMgr():
             buttonSave_class4.grid(row=0, column=3)
             buttonSave_class5.grid(row=0, column=4)
             buttonSave_class6.grid(row=0, column=5)
-            buttonSave_class7.grid(row=0, column=6)
-            buttonSave_class8.grid(row=0, column=7)
+            if len(self.class_names)==8:
+                buttonSave_class7.grid(row=0, column=6)
+                buttonSave_class8.grid(row=0, column=7)
 
             buttonDiscard.grid(row=0, column=len(self.class_names))
 
