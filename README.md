@@ -69,11 +69,11 @@ Once the dataset has been collected, it is processed the following codes are use
 
 
 ## Deep Learning
-Having collected data from the full grid search performed in Google Colab using Weights and Biases, the models can be trained. Some models were also trained locally to speed up the grid search. 
+The models can be trained by collecting data from the full grid search performed in Google Colab using Weights and Biases. Some models were also trained locally to speed up the grid search. 
 
 * **googlenet_test.py**, **mobilenet_v3_large.py**, and **restneet_train_test.py** train specific models and save them in .pth files.
 * **trainLibTorch.py** Custom package library.
-* **visualise_model.py** Visualises the model in the form of confusion matrices for training and testing datasets and displays some of the predictions and corresponding images.
+* **visualise_model.py** Visualises the model as confusion matrices for training and testing datasets and displays some of the predictions and corresponding images.
 
 ## Graphical User Interface
 It runs a graphical user interface with a Deep Learning model. At the first stages of the project, the GUI was used to collect data. The button **save photo** stores the current data and displays it in a separate window for review. The user can then save or discard the data in an appropriate folder. However its primary task is to display the current output from Arduino and the prediction label which is provided by the model running in the background. There are 3 modes of prediction.
@@ -108,7 +108,21 @@ https://github.com/gugi200/IRP4_software/blob/576afbdc9cd51b92edcc34c828059d76eb
 * **mobilenet_6_classes.pth** and **mobilenet_10_classes.pth** are the full model paths for the offline mode.
 The README file contains instructions on how to run the software on a laptop.
 
+## Datasets
+Two datasets are published, each has approximately 1000 datapoints per class (apart from 'nothing' which contains about 300 samples):
+1) data - unscaled, 10 classes: 'big_fizzy', 'can', 'h_big_bottle', 'h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy'.
+2) dataset_pressure_sensor - exponentially scaled, 6 classes: 'big_fizzy', 'h_big_bottle', 'h_bottle', 'hand', 'mug', 'small_fizzy'.
 
+The datasets are zipped. 
+!!! 32 corrupted are present in "data" dataset, which can be cleaned using the following code:
+```
+try:
+    img = Image.open(path)
+except (NameError, UnidentifiedImageError):
+    pass
+```
+The code is embedded in the dataset augmentation function in data_manipulation.py
+https://github.com/gugi200/IRP4_software/blob/b59b9674c0b62a573c39ecc40aa5caf7abdeab90/Image_Processing/data_manipulation.py#L47C5-L47C26
 ##
 
 There are also Jupiter notebooks present as lots of the tests on the model training, testing and results visualisation were carried out in Google Colab.
