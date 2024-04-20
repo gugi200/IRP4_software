@@ -12,7 +12,7 @@ Abstract:
 This study presents the development of a pressure-sensing array system with object recognition capabilities, focusing on components' accessibility, affordability, and fabrication simplicity. The sensor array with a sensing area of approximately 550 $cm^2$ consists of 576 nodes constructed using a piezoresistive material called Velostat, custom printed circuit board, copper tape, resistors, and other electronic components. Piezoresistive properties of the pressure-sensing material improved with the application of flexible polyurethane foam. Fabrication and operation require several software programs, including MCU control, GUI development, signal/image processing, and DL model training and evaluation tools. Various image processing techniques, such as exponential mapping and gamma correction, were evaluated to improve Deep Learning model prediction capabilities. A hyperparameter grid search identified the "mobilenet\_v3\_large" model architecture as the most suited to this application, achieving nearly 100\% accuracy on both test and train datasets while having minimal training time. The study demonstrates the feasibility of developing a cost-effective, high-accuracy pressure-based object detection system using easily available materials.
 
 
-![screenshot](screenshot.png)
+![screenshot](whole_sensor.jpg)
 
 This repository contains the software used for this project. Software can be divided into 4 categories:
 1) Arduino code
