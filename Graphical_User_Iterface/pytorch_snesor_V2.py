@@ -88,6 +88,8 @@ class SensorMgr():
         self.newDataFlag = False
         # if True - hard cumulative prediction; False - soft cumulative prediction
         self.MODE_avergae_prediction = True
+        # choose the sampling algorithm, if True timig_v4, if False slow_timing_v3
+        self.TIMING_V4 = True
         self.resetPredMem = True
         self.predThreadLock = False
         self.predCycles = 0
@@ -101,7 +103,11 @@ class SensorMgr():
         
         self.importModel()
         
-        self.serialThread = Thread(target=self.connectArduino)
+        if self.TIMING_V4:
+            self.serialThread = Thread(target=self.connectArduino_v4)
+        else:
+            self.serialThread = Thread(target=self.connectArduino_v3)
+          
         self.serialThread.start() 
 
        # average prediction thread
@@ -178,18 +184,8 @@ class SensorMgr():
         ''''''
                
             
-   
-
-    def connectArduino(self):
-
-        '''
-        There will be packets sent of 49 bytes each
-        [0] - row number
-        [1: ] - values for that row, two bytes per value
-        [49:53] - 255 0 255 0 end of coluimn sequence
-
-        When all 24 rows are collected data is updated
-        '''
+ 
+    def connectArduino_v4(self):
 
 
         data = np.zeros((24, 24), dtype=int)
@@ -200,6 +196,7 @@ class SensorMgr():
                 ser =  serial.Serial('/dev/ttyACM0', baudrate=9600, timeout=60) 
                 ser.close()
                 ser.open()
+
                 while (ser.is_open):
                     line = ser.read_until(
                             expected = stopByte1.to_bytes(1, 'big') + stopByte0.to_bytes(1, 'big') + \
@@ -215,11 +212,54 @@ class SensorMgr():
                     data = np.hstack([reshaped_array[24*i:24*(i+1)] for i in range(4)])
                     self.dataReady = True
                     self.newDataFlag = True
-                    print(data)
+                    # print(data)
                     print('new data available')
-                    # self.dataArray = (np.exp(- ( 30/(np.array(data)+1) )  )*1023).astype(int)
                     self.dataArray = data
-                    # print(self.dataArray)
+
+
+        
+            except (FileNotFoundError, serial.serialutil.SerialException):
+                print('Arduino not plugged in')
+                time.sleep(5)
+
+
+
+
+    def connectArduino_v3(self):
+
+
+        data = np.zeros((24, 24), dtype=int)
+        stopByte1 = 255
+        stopByte0 = 0
+        while 1:
+            try:
+                ser =  serial.Serial('/dev/ttyACM0', baudrate=9600, timeout=60) 
+                ser.close()
+                ser.open()
+
+                while (ser.is_open):
+                    line = ser.read_until(
+                            expected = stopByte1.to_bytes(1, 'little') + stopByte0.to_bytes(1, 'little') + \
+                                            stopByte1.to_bytes(1, 'little') + stopByte0.to_bytes(1, 'little') ,
+                            size = 53
+                        )
+                    
+                    if  len(line)!=53:
+                        logging.error("Wrong byte sequence received")
+                        continue 
+                    rowNumber = line[0]
+                    sensorValues = [int.from_bytes(line[x:x+2], 'little') for x in range(1, 49, 2)]
+                    data[rowNumber-1] = sensorValues
+                    if rowNumber==23:
+                        self.dataReady = True
+                        self.newDataFlag = True
+                        # print(data)
+                        print('new data available')
+                        # self.dataArray = (np.exp(- ( 30/(np.array(data)+1) )  )*1023).astype(int)
+                        self.dataArray = data
+                        # print(self.dataArray)
+
+        
             except (FileNotFoundError, serial.serialutil.SerialException):
                 print('Arduino not plugged in')
                 time.sleep(5)
