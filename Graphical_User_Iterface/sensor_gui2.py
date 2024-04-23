@@ -78,6 +78,7 @@ class SensorMgr():
 
     def __init__(self, root=None, title='picture', imageCount=0):
         self.online = True
+        self.TIMING_V4 = True
         self.model_path = "mobilenet_v3_large_test_6_classes.pth"
         self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
         # self.class_names = ['big_fizzy', 'can', 'h_big_bottle','h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy']
@@ -104,7 +105,11 @@ class SensorMgr():
         
         self.importModel()
         
-        self.serialThread = Thread(target=self.connectArduino)
+        if self.TIMING_V4:
+            self.serialThread = Thread(target=self.connectArduino_v4)
+        else:
+            self.serialThread = Thread(target=self.connectArduino_v3)
+          
         self.serialThread.start() 
 
 
@@ -148,16 +153,7 @@ class SensorMgr():
             
     
 
-    def connectArduino(self):
-
-        '''
-        There will be packets sent of 49 bytes each
-        [0] - row number
-        [1: ] - values for that row, two bytes per value
-        [49:53] - 255 0 255 0 end of coluimn sequence
-
-        When all 24 rows are collected data is updated
-        '''
+    def connectArduino_v4(self):
 
 
         data = np.zeros((24, 24), dtype=int)
@@ -168,6 +164,7 @@ class SensorMgr():
                 ser =  serial.Serial('/dev/ttyACM0', baudrate=9600, timeout=60) 
                 ser.close()
                 ser.open()
+
                 while (ser.is_open):
                     line = ser.read_until(
                             expected = stopByte1.to_bytes(1, 'big') + stopByte0.to_bytes(1, 'big') + \
@@ -185,12 +182,50 @@ class SensorMgr():
                     self.newDataFlag = True
                     # print(data)
                     print('new data available')
-                    # self.dataArray = (np.exp(- ( 30/(np.array(data)+1) )  )*1023).astype(int)
                     self.dataArray = data
-                    print(time.time()-self.t)
-                    self.t = time.time()
-                    # print(self.dataArray)
 
+
+        
+            except (FileNotFoundError, serial.serialutil.SerialException):
+                print('Arduino not plugged in')
+                time.sleep(5)
+
+
+
+
+    def connectArduino_v3(self):
+
+
+        data = np.zeros((24, 24), dtype=int)
+        stopByte1 = 255
+        stopByte0 = 0
+        while 1:
+            try:
+                ser =  serial.Serial('/dev/ttyACM0', baudrate=9600, timeout=60) 
+                ser.close()
+                ser.open()
+
+                while (ser.is_open):
+                    line = ser.read_until(
+                            expected = stopByte1.to_bytes(1, 'little') + stopByte0.to_bytes(1, 'little') + \
+                                            stopByte1.to_bytes(1, 'little') + stopByte0.to_bytes(1, 'little') ,
+                            size = 53
+                        )
+                    
+                    if  len(line)!=53:
+                        logging.error("Wrong byte sequence received")
+                        continue 
+                    rowNumber = line[0]
+                    sensorValues = [int.from_bytes(line[x:x+2], 'little') for x in range(1, 49, 2)]
+                    data[rowNumber-1] = sensorValues
+                    if rowNumber==23:
+                        self.dataReady = True
+                        self.newDataFlag = True
+                        # print(data)
+                        print('new data available')
+                        # self.dataArray = (np.exp(- ( 30/(np.array(data)+1) )  )*1023).astype(int)
+                        self.dataArray = data
+                        # print(self.dataArray)
 
         
             except (FileNotFoundError, serial.serialutil.SerialException):
