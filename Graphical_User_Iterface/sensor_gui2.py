@@ -79,7 +79,7 @@ class SensorMgr():
     def __init__(self, root=None, title='picture', imageCount=0):
         self.online = True
         self.TIMING_V4 = True
-        self.model_path = "mobilenet_v3_large_test_6_classes.pth"
+        self.model_path = "mobilenet_6_classes.pth"
         self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
         # self.class_names = ['big_fizzy', 'can', 'h_big_bottle','h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy']
 
@@ -149,7 +149,7 @@ class SensorMgr():
 
 
         self.canvas.draw() 
-        self.root.after(500, self.update)
+        self.root.after(100, self.update)
             
     
 
