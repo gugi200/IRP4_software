@@ -80,6 +80,7 @@ class SensorMgr():
         self.online = True
         self.TIMING_V4 = True
         self.model_path = "mobilenet_6_classes.pth"
+        self.model_state_path = "mobilenet_v3_large_test_6_classes.pth"
         self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
         # self.class_names = ['big_fizzy', 'can', 'h_big_bottle','h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy']
 
@@ -388,7 +389,7 @@ class SensorMgr():
                 self.lodaed_model.classifier[3] = nn.Linear(1280, len(self.class_names), bias=True)
 
             # load model
-            self.lodaed_model.load_state_dict(torch.load(f=self.model_path))
+            self.lodaed_model.load_state_dict(torch.load(f=self.model_state_path))
 
         
         else:
