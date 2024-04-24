@@ -80,11 +80,14 @@ The models can be trained by collecting data from the full grid search performed
 ## Graphical User Interface
 It runs a graphical user interface with a Deep Learning model. At the first stages of the project, the GUI was used to collect data. The button **save photo** stores the current data and displays it in a separate window for review. The user can then save or discard the data in an appropriate folder. However its primary task is to display the current output from Arduino and the prediction label which is provided by the model running in the background. There are 3 modes of prediction.
 
-* **sensor_gui2.py** The GUI runs the "simple prediction", where prediction is computed on the latest data available once every GUI refresh. It is targeted at Raspberry Pi and applications that require a higher refresh. The Raspberry Pi used for this project has a preloaded, trained full mobilenet_v3_large model to allow for offline operation. However, if ```self.online``` is set to ```True``` the models are downloaded online, two options are available: mobilenet_v3_large and googlenet. Users can also pick between 6 class and 10 class models. ```self.model_path``` specifies the path for the model in the online mode.
-```self.online = True
-      self.model_path = "mobilenet_v3_large_test_6_classes.pth"
-      self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
-      # self.class_names = ['big_fizzy', 'can', 'h_big_bottle','h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy']
+* **sensor_gui2.py** The GUI runs the "simple prediction", where prediction is computed on the latest data available once every GUI refresh. It is targeted at Raspberry Pi and applications that require a higher refresh. The Raspberry Pi used for this project has a preloaded, trained full mobilenet_v3_large model to allow for offline operation. However, if ```self.online``` is set to ```True``` the models are downloaded online, two options are available: mobilenet_v3_large and googlenet. Users can also pick between 6 class and 10 class models. ```self.model_path``` specifies the path for the model in the offline mode, whereas ```self.model_state_path``` the path for the state dictionary in the online mode. 
+```
+        self.online = True
+        self.TIMING_V4 = True
+        self.model_path = "mobilenet_6_classes.pth"
+        self.model_state_path = "mobilenet_v3_large_test_6_classes.pth"
+        self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
+        # self.class_names = ['big_fizzy', 'can', 'h_big_bottle','h_bottle', 'hand', 'mug', 'nothing', 'small_fizzy']
 ```
 https://github.com/gugi200/IRP4_software/blob/576afbdc9cd51b92edcc34c828059d76ebc31f17/Graphical_User_Iterface/sensor_gui2.py#L80
 
@@ -95,7 +98,7 @@ https://github.com/gugi200/IRP4_software/blob/576afbdc9cd51b92edcc34c828059d76eb
 
 
 
-The users also have an option between 6 and 10 class models, but since the two modes are not intended for Raspberry Pi, only the online mode is available. ```self.model_path``` specifies the path for the model
+The users also have an option between 6 and 10 class models, but since the two modes are not intended for Raspberry Pi, only the online mode is available. ```self.model_path``` specifies the path for the model's state dictionary.
 ```
       self.model_path = "mobilenet_v3_large_test_6_classes.pth"
       self.class_names = ['big_fizzy', 'h_big_bottle','h_bottle', 'hand', 'mug', 'small_fizzy']
@@ -105,9 +108,16 @@ The users also have an option between 6 and 10 class models, but since the two m
 https://github.com/gugi200/IRP4_software/blob/576afbdc9cd51b92edcc34c828059d76ebc31f17/Graphical_User_Iterface/pytorch_snesor_V2.py#L79
 
 
+
+As stated before the system has two versions of slow data sampling algorithms, **sensor_gui2.py** and **pytorch_snesor_V2.py** allow for both to be used. A flag ```self.TIMING_V4 = True``` specifies if **timing_v4** is bo be used (```True```) or **slow_sensor_read_v3** (```False```).
+
+
+
+
+
 * **trainLibTorch.py** Custom package library.
-* **mobilenet_v3_large_test_10_classes.pth** and **mobilenet_v3_large_test_10_classes.pth** are saved wights of the trained model
-* **mobilenet_6_classes.pth** and **mobilenet_10_classes.pth** are the full model paths for the offline mode.
+* **mobilenet_v3_large_test_6_classes.pth** and **mobilenet_v3_large_test_10_classes.pth** are saved wights of the trained model for the 6 and 10-class models, respectively.
+* **mobilenet_6_classes.pth** and **mobilenet_10_classes.pth** are the full model paths for the offline mode for the 6 and 10-class models, respectively.
 The README file contains instructions on how to run the software on a laptop.
 
 ## Datasets
